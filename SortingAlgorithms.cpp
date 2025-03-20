@@ -1,28 +1,37 @@
 #include "SortingAlgorithms.h"
 
 // Selection Sort
-void selectionSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int i = 0; i < n - 1; i++) {
+void selectionSort(vector<int>& arr, unsigned long long& comparisons)
+{
+    int size = arr.size();
+
+    for (int i = 0; (++comparisons) && (i < size - 1); i++) 
+    {
         int minIdx = i;
-        for (int j = i + 1; j < n; j++) {
-            comparisons++;
-            if (arr[j] < arr[minIdx]) {
+
+        for (int j = i + 1; (++comparisons) && (j < size); j++) 
+        {
+            if ((++comparisons) && (arr[j] < arr[minIdx])) 
+            {
                 minIdx = j;
-            }
+            }   
         }
         swap(arr[i], arr[minIdx]);
     }
 }
 
 // Insertion Sort
-void insertionSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int i = 1; i < n; i++) {
+void insertionSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+
+    for (int i = 1; (++comparisons) && (i < size); i++) 
+    {
         int key = arr[i];
         int j = i - 1;
-        while (j >= 0 && arr[j] > key) {
-            comparisons++;
+
+        while ((++comparisons && j >= 0) && (++comparisons && arr[j] > key)) 
+        {
             arr[j + 1] = arr[j];
             j--;
         }
@@ -30,14 +39,21 @@ void insertionSort(vector<int>& arr, long long& comparisons) {
     }
 }
 
+
 // Shell Sort
-void shellSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int gap = n / 2; gap > 0; gap /= 2) {
-        for (int i = gap; i < n; i++) {
-            int temp = arr[i], j;
-            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap) {
-                comparisons++;
+void shellSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+
+    for (int gap = size / 2; (++comparisons) && (gap > 0); gap /= 2) 
+    {
+        for (int i = gap; (++comparisons) && (i < size); i++) 
+        {
+            int temp = arr[i];
+
+            int j;
+            for (j = i; (++comparisons) && (j >= gap) && (++comparisons) && (arr[j - gap] > temp); j -= gap) 
+            {
                 arr[j] = arr[j - gap];
             }
             arr[j] = temp;
@@ -45,54 +61,110 @@ void shellSort(vector<int>& arr, long long& comparisons) {
     }
 }
 
+
 // Bubble Sort
-void bubbleSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            comparisons++;
-            if (arr[j] > arr[j + 1]) swap(arr[j], arr[j + 1]);
+void bubbleSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+
+    for (int i = 0; (++comparisons) && (i < size - 1); i++) 
+    {
+        for (int j = 0; (++comparisons) && (j < size - i - 1); j++) 
+        {
+            if ((++comparisons) && (arr[j] > arr[j + 1])) 
+                swap(arr[j], arr[j + 1]);
         }
     }
 }
 
+// void bubbleSort(vector<int>& arr, unsigned long long& comparisons) 
+// {
+//     int n = arr.size();
+//     bool swapped;
+  
+//     for (int i = 0; (++comparisons) && (i < n - 1); i++) 
+//     {
+//         swapped = false;
+//         for (int j = 0; (++comparisons) && (j < n - i - 1); j++) 
+//         {
+//             if ((++comparisons) && (arr[j] > arr[j + 1])) 
+//             {
+//                 swap(arr[j], arr[j + 1]);
+//                 swapped = true;
+//             }
+//         }
+      
+//         // If no two elements were swapped, then break
+//         if ((++comparisons) && (!swapped))
+//             break;
+//     }
+// }
+
 // Heap Sort
-void heapify(vector<int>& arr, int n, int i, long long& comparisons) {
-    int largest = i, left = 2 * i + 1, right = 2 * i + 2;
-    if (left < n && arr[left] > arr[largest]) largest = left;
-    if (right < n && arr[right] > arr[largest]) largest = right;
-    comparisons += 2;
-    if (largest != i) {
+void heapify(vector<int>& arr, int n, int i, unsigned long long& comparisons) 
+{
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    if ((++comparisons) && (left < n) && (++comparisons) &&  (arr[left] > arr[largest])) 
+        largest = left;
+    if ((++comparisons) && (right < n) && (++comparisons) && (arr[right] > arr[largest])) 
+        largest = right;
+    if ((++comparisons) && (largest != i)) 
+    {
         swap(arr[i], arr[largest]);
+
         heapify(arr, n, largest, comparisons);
     }
 }
-void heapSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i, comparisons);
-    for (int i = n - 1; i > 0; i--) {
+
+void heapSort(vector<int>& arr, unsigned long long& comparisons)
+{
+    int size = arr.size();
+
+    for (int i = size / 2 - 1; (++comparisons) && (i >= 0); i--) 
+        heapify(arr, size, i, comparisons);
+    
+    for (int i = size - 1; (i > 0); i--) 
+    {
         swap(arr[0], arr[i]);
+
         heapify(arr, i, 0, comparisons);
     }
 }
 
 // Merge Sort
-void merge(vector<int>& arr, int left, int mid, int right, long long& comparisons) {
-    int n1 = mid - left + 1, n2 = right - mid;
+void merge(vector<int>& arr, int left, int mid, int right, unsigned long long& comparisons) 
+{
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
     vector<int> L(n1), R(n2);
-    for (int i = 0; i < n1; i++) L[i] = arr[left + i];
-    for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+
+    for (int i = 0; (++comparisons) && (i < n1); i++) 
+        L[i] = arr[left + i];
+    for (int j = 0; (++comparisons) && (j < n2); j++) 
+        R[j] = arr[mid + 1 + j];
+    
     int i = 0, j = 0, k = left;
-    while (i < n1 && j < n2) {
-        comparisons++;
+
+    while ((++comparisons) && (i < n1) && (++comparisons) && (j < n2)) 
+    {
         arr[k++] = (L[i] <= R[j]) ? L[i++] : R[j++];
     }
-    while (i < n1) arr[k++] = L[i++];
-    while (j < n2) arr[k++] = R[j++];
+    while ((++comparisons) && (i < n1)) 
+        arr[k++] = L[i++];
+    while ((++comparisons) && (j < n2)) 
+        arr[k++] = R[j++];
 }
-void mergeSort(vector<int>& arr, int left, int right, long long& comparisons) {
-    if (left < right) {
+
+void mergeSort(vector<int>& arr, int left, int right, unsigned long long& comparisons) 
+{
+    if ((++comparisons) && (left < right)) 
+    {
         int mid = left + (right - left) / 2;
+
         mergeSort(arr, left, mid, comparisons);
         mergeSort(arr, mid + 1, right, comparisons);
         merge(arr, left, mid, right, comparisons);
@@ -100,70 +172,232 @@ void mergeSort(vector<int>& arr, int left, int right, long long& comparisons) {
 }
 
 // Quick Sort
-int partition(vector<int>& arr, int low, int high, long long& comparisons) {
-    int pivot = arr[high], i = low - 1;
-    for (int j = low; j < high; j++) {
-        comparisons++;
-        if (arr[j] < pivot) swap(arr[++i], arr[j]);
+// int partition(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
+// {
+//     int pivot = arr[high];
+//     int i = low - 1;
+
+//     for (int j = low; (++comparisons) && (j < high); j++) 
+//     {
+//         if ((++comparisons) && (arr[j] < pivot)) 
+//             swap(arr[++i], arr[j]);
+//     }
+
+//     swap(arr[i + 1], arr[high]);
+
+//     return i + 1;
+// }
+
+// void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
+// {
+//     if ((++comparisons) && (low < high)) 
+//     {
+//         int pivot = partition(arr, low, high, comparisons);
+
+//         quickSort(arr, low, pivot - 1, comparisons);
+//         quickSort(arr, pivot + 1, high, comparisons);
+//     }
+// }
+
+int medianOfThree(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
+{
+    int mid = low + (high - low) / 2;
+
+    if ((++comparisons) && (arr[low] > arr[mid])) 
+        swap(arr[low], arr[mid]);
+    if ((++comparisons) && (arr[low] > arr[high])) 
+        swap(arr[low], arr[high]);
+    if ((++comparisons) && (arr[mid] > arr[high])) 
+        swap(arr[mid], arr[high]);
+
+    return mid;
+}
+
+int partition(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
+{
+    int pivotIndex = medianOfThree(arr, low, high, comparisons);
+    swap(arr[pivotIndex], arr[high]); 
+    int pivot = arr[high];
+
+    int i = low - 1;
+
+    for (int j = low; (++comparisons) && (j < high); j++) 
+    {
+        if ((++comparisons) && (arr[j] < pivot))
+            swap(arr[++i], arr[j]);
     }
+
     swap(arr[i + 1], arr[high]);
+
     return i + 1;
 }
-void quickSort(vector<int>& arr, int low, int high, long long& comparisons) {
-    if (low < high) {
-        int pi = partition(arr, low, high, comparisons);
-        quickSort(arr, low, pi - 1, comparisons);
-        quickSort(arr, pi + 1, high, comparisons);
+
+void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
+{
+    while ((++comparisons) && (low < high)) 
+    {
+        int pivot = partition(arr, low, high, comparisons);
+
+        if ((++comparisons) && (pivot - low < high - pivot)) 
+        {
+            quickSort(arr, low, pivot - 1, comparisons);
+            low = pivot + 1; 
+        } 
+        else 
+        {
+            quickSort(arr, pivot + 1, high, comparisons);
+            high = pivot - 1;
+        }
     }
 }
 
+// int medianOfThree(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
+//     int mid = low + (high - low) / 2;
+    
+//     if ((++comparisons) && arr[low] > arr[mid]) swap(arr[low], arr[mid]);
+//     if ((++comparisons) && arr[low] > arr[high]) swap(arr[low], arr[high]);
+//     if ((++comparisons) && arr[mid] > arr[high]) swap(arr[mid], arr[high]);
+    
+//     return mid; // Return index of median
+// }
+
+// int partition(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
+//     int pivotIndex = medianOfThree(arr, low, high, comparisons);
+//     swap(arr[pivotIndex], arr[high]); // Move pivot to end
+//     int pivot = arr[high];
+
+//     int i = low - 1;
+//     for (int j = low; (++comparisons) && (j < high); j++) {
+//         if ((++comparisons) && (arr[j] < pivot))
+//             swap(arr[++i], arr[j]);
+//     }
+//     swap(arr[i + 1], arr[high]);
+//     return i + 1;
+// }
+
+// void insertionSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
+//     for (int i = low + 1; (++comparisons) && i <= high; i++) {
+//         int key = arr[i];
+//         int j = i - 1;
+
+//         while ((++comparisons) && (j >= low) && (arr[j] > key)) {
+//             arr[j + 1] = arr[j];
+//             j--;
+//         }
+//         arr[j + 1] = key;
+//     }
+// }
+
+// void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
+//     while ((++comparisons) && (low < high)) {
+//         if ((++comparisons) && high - low <= 16) {
+//             insertionSort(arr, low, high, comparisons);
+//             return;
+//         }
+
+//         int pivot = partition(arr, low, high, comparisons);
+
+//         // Optimize recursion depth by sorting smaller partition first
+//         if ((++comparisons) && pivot - low < high - pivot) {
+//             quickSort(arr, low, pivot - 1, comparisons);
+//             low = pivot + 1; // Tail recursion elimination
+//         } else {
+//             quickSort(arr, pivot + 1, high, comparisons);
+//             high = pivot - 1; // Tail recursion elimination
+//         }
+//     }
+// }
+
 // Radix Sort
-void countingSortForRadix(vector<int>& arr, int exp) {
-    int n = arr.size();
-    vector<int> output(n);
+void countingSortForRadix(vector<int>& arr, int exp, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+    vector<int> output(size);
     int count[10] = {0};
-    for (int i = 0; i < n; i++) count[(arr[i] / exp) % 10]++;
-    for (int i = 1; i < 10; i++) count[i] += count[i - 1];
-    for (int i = n - 1; i >= 0; i--) {
+
+    for (int i = 0; (++comparisons) && i < size; i++) 
+        count[(arr[i] / exp) % 10]++;
+
+    for (int i = 1; (++comparisons) && i < 10; i++) 
+        count[i] += count[i - 1];
+
+    for (int i = size - 1; (++comparisons) && i >= 0; i--) 
+    {
         output[count[(arr[i] / exp) % 10] - 1] = arr[i];
         count[(arr[i] / exp) % 10]--;
     }
-    for (int i = 0; i < n; i++) arr[i] = output[i];
+
+    for (int i = 0; (++comparisons) && i < size; i++) arr[i] = output[i];
 }
-void radixSort(vector<int>& arr) {
+void radixSort(vector<int>& arr, unsigned long long& comparisons) {
+    if ((++comparisons) && arr.empty()) 
+        return;
+
     int maxVal = *max_element(arr.begin(), arr.end());
-    for (int exp = 1; maxVal / exp > 0; exp *= 10) {
-        countingSortForRadix(arr, exp);
+
+    for (int exp = 1; (++comparisons) && maxVal / exp > 0; exp *= 10) 
+    {
+        countingSortForRadix(arr, exp, comparisons);
     }
 }
 
 // Counting Sort
-void countingSort(vector<int>& arr) {
-    int maxVal = *max_element(arr.begin(), arr.end());
-    vector<int> count(maxVal + 1, 0);
-    for (int num : arr) count[num]++;
-    int index = 0;
-    for (int i = 0; i <= maxVal; i++) {
-        while (count[i]--) arr[index++] = i;
+void countingSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+    if (size == 0) return; // Edge case: Empty array
+
+    // Finding the maximum element
+    int maxElement = *max_element(arr.begin(), arr.end());
+
+    // Initializing countArray with 0
+    vector<int> countArray(maxElement + 1, 0);
+
+    // Counting occurrences
+    for (auto i = arr.begin(); (++comparisons) && (i != arr.end()); ++i)
+    countArray[*i]++;
+
+    // Computing prefix sums
+    for (int i = 1; (++comparisons) && (i <= maxElement); i++)
+        countArray[i] += countArray[i - 1];
+
+    // Creating output array
+    vector<int> outputArray(size);
+
+    // Placing elements in sorted order
+    for (int i = size - 1; (++comparisons) && (i >= 0); i--) 
+    {
+        outputArray[countArray[arr[i]] - 1] = arr[i];
+        countArray[arr[i]]--;
     }
+
+    // Copy sorted elements back to original array
+    arr = outputArray;
 }
 
 //---------------BONUS EXPLORATIONS---------------
 // Binary Insertion Sort
-void binaryInsertionSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    for (int i = 1; i < n; i++) {
+void binaryInsertionSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+
+    for (int i = 1; (++comparisons) && i < size; i++) 
+    {
         int key = arr[i];
         int left = 0, right = i - 1;
-        while (left <= right) {
+
+        while ((++comparisons) && left <= right) 
+        {
             int mid = left + (right - left) / 2;
-            comparisons++;
-            if (arr[mid] > key)
+
+            if ((++comparisons) && arr[mid] > key)
                 right = mid - 1;
             else
                 left = mid + 1;
         }
-        for (int j = i - 1; j >= left; j--) {
+
+        for (int j = i - 1; (++comparisons) && j >= left; j--) 
+        {
             arr[j + 1] = arr[j];
         }
         arr[left] = key;
@@ -171,60 +405,88 @@ void binaryInsertionSort(vector<int>& arr, long long& comparisons) {
 }
 
 // Shaker Sort
-void shakerSort(vector<int>& arr, long long& comparisons) {
+void shakerSort(vector<int>& arr, unsigned long long& comparisons) 
+{
     int left = 0, right = arr.size() - 1;
     bool swapped;
-    do {
+
+    do 
+    {
         swapped = false;
-        for (int i = left; i < right; i++) {
-            comparisons++;
-            if (arr[i] > arr[i + 1]) {
+
+        for (int i = left; (++comparisons) && i < right; i++) 
+        {
+            if ((++comparisons) && arr[i] > arr[i + 1]) 
+            {
                 swap(arr[i], arr[i + 1]);
                 swapped = true;
             }
         }
+
         right--;
-        for (int i = right; i > left; i--) {
-            comparisons++;
-            if (arr[i] < arr[i - 1]) {
+        for (int i = right; (++comparisons) && i > left; i--) 
+        {
+            if ((++comparisons) && arr[i] < arr[i - 1]) 
+            {
                 swap(arr[i], arr[i - 1]);
                 swapped = true;
             }
         }
         left++;
-    } while (swapped);
+    } 
+    while ((++comparisons) && swapped);
 }
 
 
 // Flash Sort
-void flashSort(vector<int>& arr, long long& comparisons) {
-    int n = arr.size();
-    if (n <= 1) return;
+void flashSort(vector<int>& arr, unsigned long long& comparisons) 
+{
+    int size = arr.size();
+
+    if ((++comparisons) && size <= 1) 
+        return;
+
     int minVal = arr[0], maxIdx = 0;
-    for (int i = 1; i < n; i++) {
-        comparisons++;
-        if (arr[i] < minVal) minVal = arr[i];
-        if (arr[i] > arr[maxIdx]) maxIdx = i;
+
+    for (int i = 1; (++comparisons) && i < size; i++) 
+    {
+        if ((++comparisons) && arr[i] < minVal) 
+            minVal = arr[i];
+
+        if ((++comparisons) && arr[i] > arr[maxIdx]) 
+            maxIdx = i;
     }
-    if (minVal == arr[maxIdx]) return;
-    int m = int(0.45 * n);
+
+    if ((++comparisons) && minVal == arr[maxIdx]) 
+        return;
+
+    int m = int(0.45 * size);
     vector<int> L(m, 0);
     double c1 = (double)(m - 1) / (arr[maxIdx] - minVal);
-    for (int i = 0; i < n; i++) {
+
+    for (int i = 0; (++comparisons) && i < size; i++) 
+    {
         int k = int(c1 * (arr[i] - minVal));
         L[k]++;
     }
-    for (int i = 1; i < m; i++) {
+
+    for (int i = 1; i < m; i++) 
+    {
         L[i] += L[i - 1];
     }
+
     int count = 0, i = 0, k = m - 1, hold;
-    while (count < n - 1) {
-        while (i > L[k] - 1) {
+
+    while ((++comparisons) && count < size - 1) 
+    {
+        while ((++comparisons) && i > L[k] - 1) 
+        {
             i++;
             k = int(c1 * (arr[i] - minVal));
         }
         hold = arr[i];
-        while (i != L[k]) {
+        while ((++comparisons) && i != L[k]) 
+        {
             k = int(c1 * (hold - minVal));
             swap(hold, arr[L[k] - 1]);
             L[k]--;

@@ -12,8 +12,9 @@ void HoanVi(T &a, T &b)
 //-------------------------------------------------
 
 // Hàm phát sinh mảng dữ liệu ngẫu nhiên
-void GenerateRandomData(int a[], int n)
+void GenerateRandomData(vector<int> &a, int n)
 {
+	a.resize(n);
 	srand((unsigned int)time(NULL));
 
 	for (int i = 0; i < n; i++)
@@ -23,8 +24,9 @@ void GenerateRandomData(int a[], int n)
 }
 
 // Hàm phát sinh mảng dữ liệu có thứ tự tăng dần
-void GenerateSortedData(int a[], int n)
+void GenerateSortedData(vector<int> &a, int n)
 {
+	a.resize(n);
 	for (int i = 0; i < n; i++)
 	{
 		a[i] = i;
@@ -32,8 +34,9 @@ void GenerateSortedData(int a[], int n)
 }
 
 // Hàm phát sinh mảng dữ liệu có thứ tự ngược (giảm dần)
-void GenerateReverseData(int a[], int n)
+void GenerateReverseData(vector<int> &a, int n)
 {
+	a.resize(n);
 	for (int i = 0; i < n; i++)
 	{
 		a[i] = n - 1 - i;
@@ -41,8 +44,9 @@ void GenerateReverseData(int a[], int n)
 }
 
 // Hàm phát sinh mảng dữ liệu gần như có thứ tự
-void GenerateNearlySortedData(int a[], int n)
+void GenerateNearlySortedData(vector<int> &a, int n)
 {
+	a.resize(n);
 	for (int i = 0; i < n; i++)
 	{
 		a[i] = i;
@@ -56,7 +60,7 @@ void GenerateNearlySortedData(int a[], int n)
 	}
 }
 
-void GenerateData(int a[], int n, int dataType)
+void GenerateData(vector<int> &a, int n, int dataType)
 {
 	switch (dataType)
 	{
