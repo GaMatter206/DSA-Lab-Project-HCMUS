@@ -206,3 +206,18 @@ void printOutputComparison(string &order, int time1 , int time2 ,unsigned long l
     cout << "\nComparisons: " << comp1 << " | " << comp2 << "\n";
     
 }
+
+
+void printExperimentsOutput(int order, int size, string algorithm, int time, unsigned long long comparisons)
+{
+    vector<string> orders(4);
+    orders[0] = "-rand";
+    orders[1] = "-sorted";
+    orders[2] = "-rev";
+    orders[3] = "-nsorted";
+
+
+
+    cout << "\n[DONE] " << orders[order] << " | " << size << " | " << algorithm << " | " << time << " ms | " << comparisons;
+
+}

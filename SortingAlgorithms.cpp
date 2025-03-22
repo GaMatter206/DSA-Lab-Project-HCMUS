@@ -20,6 +20,7 @@ void selectionSort(vector<int>& arr, unsigned long long& comparisons)
     }
 }
 
+
 // Insertion Sort
 void insertionSort(vector<int>& arr, unsigned long long& comparisons) 
 {
@@ -77,28 +78,6 @@ void bubbleSort(vector<int>& arr, unsigned long long& comparisons)
     }
 }
 
-// void bubbleSort(vector<int>& arr, unsigned long long& comparisons) 
-// {
-//     int n = arr.size();
-//     bool swapped;
-  
-//     for (int i = 0; (++comparisons) && (i < n - 1); i++) 
-//     {
-//         swapped = false;
-//         for (int j = 0; (++comparisons) && (j < n - i - 1); j++) 
-//         {
-//             if ((++comparisons) && (arr[j] > arr[j + 1])) 
-//             {
-//                 swap(arr[j], arr[j + 1]);
-//                 swapped = true;
-//             }
-//         }
-      
-//         // If no two elements were swapped, then break
-//         if ((++comparisons) && (!swapped))
-//             break;
-//     }
-// }
 
 // Heap Sort
 void heapify(vector<int>& arr, int n, int i, unsigned long long& comparisons) 
@@ -133,6 +112,7 @@ void heapSort(vector<int>& arr, unsigned long long& comparisons)
         heapify(arr, i, 0, comparisons);
     }
 }
+
 
 // Merge Sort
 void merge(vector<int>& arr, int left, int mid, int right, unsigned long long& comparisons) 
@@ -171,34 +151,8 @@ void mergeSort(vector<int>& arr, int left, int right, unsigned long long& compar
     }
 }
 
+
 // Quick Sort
-// int partition(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
-// {
-//     int pivot = arr[high];
-//     int i = low - 1;
-
-//     for (int j = low; (++comparisons) && (j < high); j++) 
-//     {
-//         if ((++comparisons) && (arr[j] < pivot)) 
-//             swap(arr[++i], arr[j]);
-//     }
-
-//     swap(arr[i + 1], arr[high]);
-
-//     return i + 1;
-// }
-
-// void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
-// {
-//     if ((++comparisons) && (low < high)) 
-//     {
-//         int pivot = partition(arr, low, high, comparisons);
-
-//         quickSort(arr, low, pivot - 1, comparisons);
-//         quickSort(arr, pivot + 1, high, comparisons);
-//     }
-// }
-
 int medianOfThree(vector<int>& arr, int low, int high, unsigned long long& comparisons) 
 {
     int mid = low + (high - low) / 2;
@@ -251,62 +205,6 @@ void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparis
     }
 }
 
-// int medianOfThree(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
-//     int mid = low + (high - low) / 2;
-    
-//     if ((++comparisons) && arr[low] > arr[mid]) swap(arr[low], arr[mid]);
-//     if ((++comparisons) && arr[low] > arr[high]) swap(arr[low], arr[high]);
-//     if ((++comparisons) && arr[mid] > arr[high]) swap(arr[mid], arr[high]);
-    
-//     return mid; // Return index of median
-// }
-
-// int partition(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
-//     int pivotIndex = medianOfThree(arr, low, high, comparisons);
-//     swap(arr[pivotIndex], arr[high]); // Move pivot to end
-//     int pivot = arr[high];
-
-//     int i = low - 1;
-//     for (int j = low; (++comparisons) && (j < high); j++) {
-//         if ((++comparisons) && (arr[j] < pivot))
-//             swap(arr[++i], arr[j]);
-//     }
-//     swap(arr[i + 1], arr[high]);
-//     return i + 1;
-// }
-
-// void insertionSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
-//     for (int i = low + 1; (++comparisons) && i <= high; i++) {
-//         int key = arr[i];
-//         int j = i - 1;
-
-//         while ((++comparisons) && (j >= low) && (arr[j] > key)) {
-//             arr[j + 1] = arr[j];
-//             j--;
-//         }
-//         arr[j + 1] = key;
-//     }
-// }
-
-// void quickSort(vector<int>& arr, int low, int high, unsigned long long& comparisons) {
-//     while ((++comparisons) && (low < high)) {
-//         if ((++comparisons) && high - low <= 16) {
-//             insertionSort(arr, low, high, comparisons);
-//             return;
-//         }
-
-//         int pivot = partition(arr, low, high, comparisons);
-
-//         // Optimize recursion depth by sorting smaller partition first
-//         if ((++comparisons) && pivot - low < high - pivot) {
-//             quickSort(arr, low, pivot - 1, comparisons);
-//             low = pivot + 1; // Tail recursion elimination
-//         } else {
-//             quickSort(arr, pivot + 1, high, comparisons);
-//             high = pivot - 1; // Tail recursion elimination
-//         }
-//     }
-// }
 
 // Radix Sort
 void countingSortForRadix(vector<int>& arr, int exp, unsigned long long& comparisons) 
@@ -329,6 +227,7 @@ void countingSortForRadix(vector<int>& arr, int exp, unsigned long long& compari
 
     for (int i = 0; (++comparisons) && i < size; i++) arr[i] = output[i];
 }
+
 void radixSort(vector<int>& arr, unsigned long long& comparisons) {
     if ((++comparisons) && arr.empty()) 
         return;
@@ -345,35 +244,31 @@ void radixSort(vector<int>& arr, unsigned long long& comparisons) {
 void countingSort(vector<int>& arr, unsigned long long& comparisons) 
 {
     int size = arr.size();
-    if (size == 0) return; // Edge case: Empty array
 
-    // Finding the maximum element
+    if (size == 0) 
+        return;
+
     int maxElement = *max_element(arr.begin(), arr.end());
 
-    // Initializing countArray with 0
     vector<int> countArray(maxElement + 1, 0);
 
-    // Counting occurrences
     for (auto i = arr.begin(); (++comparisons) && (i != arr.end()); ++i)
-    countArray[*i]++;
+        countArray[*i]++;
 
-    // Computing prefix sums
     for (int i = 1; (++comparisons) && (i <= maxElement); i++)
         countArray[i] += countArray[i - 1];
 
-    // Creating output array
     vector<int> outputArray(size);
 
-    // Placing elements in sorted order
     for (int i = size - 1; (++comparisons) && (i >= 0); i--) 
     {
         outputArray[countArray[arr[i]] - 1] = arr[i];
         countArray[arr[i]]--;
     }
 
-    // Copy sorted elements back to original array
     arr = outputArray;
 }
+
 
 //---------------BONUS EXPLORATIONS---------------
 // Binary Insertion Sort
@@ -403,6 +298,7 @@ void binaryInsertionSort(vector<int>& arr, unsigned long long& comparisons)
         arr[left] = key;
     }
 }
+
 
 // Shaker Sort
 void shakerSort(vector<int>& arr, unsigned long long& comparisons) 

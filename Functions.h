@@ -28,3 +28,4 @@ void printTimeOutputAlgorithm(string &order, int time);
 void printComparisonOutputAlgorithm(string &order, unsigned long long comp);
 void printBothOutputAlgorithm(string &order, unsigned long long comp, int time);
 void printOutputComparison(string &order, int time1 , int time2 ,unsigned long long comp1, unsigned long long comp2);
+void printExperimentsOutput(int order, int size, string algorithm, int time, unsigned long long comparisons);
